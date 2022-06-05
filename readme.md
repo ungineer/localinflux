@@ -12,6 +12,7 @@ Simple InfluxDB container with basic write API deployed in a trust environment (
 ```bash
 git clone https://github.com/ungineer/localinflux
 cd localinflux
+mkdir data
 # you might need to run this with sudo, depending on your install
 docker-compose up -d
 # docker compose up -d <-- for newer docker installations
