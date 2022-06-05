@@ -1,0 +1,30 @@
+services:
+
+    api:
+      build: .
+      depends_on: 
+        - 'fluxdb'
+      ports:
+        - "8400:8000"
+      volumes:
+        - ./api:/code
+        - ./config:/fluxconfig
+      environment: &flux_init_db
+        DOCKER_INFLUXDB_INIT_ORG: "main_org"
+        DOCKER_INFLUXDB_INIT_BUCKET: "main"
+
+    fluxdb:
+      image: influxdb:2.0
+      ports:
+        - "8086:8086"
+      volumes:
+        - ./data:/var/lib/influxdb2
+        - ./config:/etc/influxdb2
+      environment:
+        <<: *flux_init_db
+        DOCKER_INFLUXDB_INIT_MODE: "setup"
+        INFLUXDB_ADMIN_USER: "admin"
+        INFLUXDB_ADMIN_PASSWORD: "admin"
+        DOCKER_INFLUXDB_INIT_USERNAME: "admin"
+        DOCKER_INFLUXDB_INIT_PASSWORD: "099876admin"
+        INFLUXDB_HTTP_AUTH_ENABLED: "true"
